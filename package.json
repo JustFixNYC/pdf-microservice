@@ -1,0 +1,19 @@
+{
+  "name": "justfix-pdf-microservice",
+  "description": "PDF microservice for JustFixNYC's letter creation process",
+  "version": "0.0.1",
+  "author": "Meegan",
+  "engines": {
+    "node": "0.10.x",
+    "npm": "1.4.x"
+  },
+  "scripts": {
+    
+  },
+  "dependencies": {
+    
+  },
+  "devDependencies": {
+
+  }
+}
