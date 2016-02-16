@@ -8,7 +8,7 @@
 var express    = require('express');        // call express
 var app        = express();                 // define our app using express
 var bodyParser = require('body-parser');
-var complaints = require('../app/routes/server.complaintLetter');
+var complaints = require('../app/routes/server.routes.complaintLetter');
 
 app.use('/complaint-letter', complaints);
 
