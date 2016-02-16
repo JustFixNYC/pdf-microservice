@@ -1,0 +1,86 @@
+{
+    "name": "test Template",
+    "options": {
+        "pages": [
+            {
+                "layout": {
+                    "size": "A4",
+                    "header": false,
+                    "footer": false,
+                    "layout": "portrait",
+                    "margins": {
+                        "top": 0,
+                        "left": 0,
+                        "bottom": 0,
+                        "right": 0
+                    }
+                },
+                "background": {
+                    
+                },
+                "sections": {
+                    "landlordAddress": {
+                        "font": {
+                            "name": "./fonts/arial.ttf",
+                            "size": 8,
+                            "color": "#000000"
+                        },
+                        "format": {
+                            "align": "left",
+                            "left": 70,
+                            "top": 30,
+                            "width": 481,
+                            "height": 70,
+                            "textmargin": {
+                                "left": 5,
+                                "top": 5,
+                                "right": 5,
+                                "bottom": 5
+                            }
+                        }
+                    },
+                    "date": {
+                        "font": {
+                            "name": "./fonts/arial.ttf",
+                            "size": 8,
+                            "color": "#000000"
+                        },
+                        "format": {
+                            "align": "right",
+                            "left": 70,
+                            "top": 30,
+                            "width": 481,
+                            "height": 70,
+                            "textmargin": {
+                                "left": 5,
+                                "top": 5,
+                                "right": 5,
+                                "bottom": 5
+                            }
+                        }
+                    },
+                    "mainBody": {
+                        "font": {
+                            "name": "./fonts/arial.ttf",
+                            "size": 10,
+                            "color": "#000000"
+                        },
+                        "format": {
+                            "align": "left",
+                            "left": 70,
+                            "top": 70,
+                            "width": 481,
+                            "height": 70,
+                            "textmargin": {
+                                "left": 5,
+                                "top": 5,
+                                "right": 5,
+                                "bottom": 5
+                            }
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}
