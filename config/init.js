@@ -10,6 +10,7 @@ var app        = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var complaints = require('../app/routes/server.routes.complaintLetter');
 
+// Define raw app routes here (the above routes contain the actual requests, the controllers the functionality)
 app.use('/complaint-letter', complaints);
 
 // configure app to use bodyParser()
