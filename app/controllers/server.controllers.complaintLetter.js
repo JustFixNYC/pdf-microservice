@@ -1,10 +1,16 @@
 'use strict';
 
 var complaint = require('lx-pdf')('./app/pdf_templates/complaint.template.json');
-var exported = {}; // This is our exported module
+var public = {}; // This is our exported module
+var private = {}; // Internal helper functions
+
+private.buildPDF = function(fullObj) {
+
+};
 
 
-exported.promise = function() {
+
+exported.get = function(req, res) {
 
 	var rawDate = new Date();
 	var finalDate = (rawDate.getMonth() + 1) + '/' + (rawDate.getDate()) + '/' + (rawDate.getFullYear());
@@ -18,25 +24,17 @@ exported.promise = function() {
 	complaint.addContent('mainBody', text);
 	complaint.addContent('landlordAddress', landlordAddress);
 	complaint.addContent('date', finalDate);
-	console.log('start of printing');
 
 	complaint.print(function(data, error) {
 
-		console.log('data is supposed: ' + 'fuck');
-		return data; 	
-
 		if(error == false){
-			return error;
+			res.json(error);
 		}
+
+		res.json(data); 	
 
 	});
 
-	console.log("I should never be seen");
-
-};
-
-exported.get = function() {
-	return exported.promise();
 };
 
 module.exports = exported;

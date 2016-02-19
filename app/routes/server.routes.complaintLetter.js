@@ -22,13 +22,7 @@ router.use(function(req, res, next) {
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/', function(req, res) {
-	var saved = complaints.get();
-	if(saved !== undefined) {
- 	  res.json(saved);  
-	} else {
-		console.log(saved);
-		res.json({"error": "i am error"});
-	}
+	complaints.get(req, res);
 });
 
 router.post('/', function(req, res) {
