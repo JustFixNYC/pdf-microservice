@@ -20,13 +20,13 @@ router.use(function(req, res, next) {
   next(); // make sure we go to the next routes and don't stop here
 });
 
-// test route to make sure everything is working (accessed at GET http://localhost:8080/api)
+// test route to make sure everything is working (accessed at GET http://localhost:8080/complaint-letter)
 router.get('/', function(req, res) {
 	complaints.get(req, res);
 });
 
 router.post('/', function(req, res) {
-  res.json({ message: 'This should have the S3 bucket save command' });   
+  complaints.save(req, res);  
 });
 
 // more routes for our API will happen here

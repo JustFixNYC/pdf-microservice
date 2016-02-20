@@ -59,7 +59,7 @@
                             }
                         }
                     },
-                    "mainBody": {
+                    "main": {
                         "font": {
                             "name": "./fonts/arial.ttf",
                             "size": 10,
@@ -70,7 +70,7 @@
                             "left": 70,
                             "top": 70,
                             "width": 481,
-                            "height": 70,
+                            "height": 600,
                             "textmargin": {
                                 "left": 5,
                                 "top": 5,
