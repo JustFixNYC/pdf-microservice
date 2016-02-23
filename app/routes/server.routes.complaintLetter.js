@@ -1,10 +1,10 @@
-
+// Figure out when to break out into services (IE AWS)
 // call the packages we need
-var express    = require('express');        // call express
-var app        = express();                 // define our app using express
-var router 		 = express.Router();          // get an instance of the express Router
-var complaints = require('../controllers/server.controllers.complaintLetter');
-
+var express    = require('express'),        // call express
+		app        = express(),					        // define our app using express
+		router 		 = express.Router(),          // get an instance of the express Router
+		complaints = require('../controllers/server.controllers.complaintLetter'),
+		aws 			 = require('../services/server.services.aws');
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
@@ -26,7 +26,8 @@ router.get('/', function(req, res) {
 });
 
 router.post('/', function(req, res) {
-  complaints.save(req, res);  
+  // complaints.save(req, res);
+  complaints.save(req, res);
 });
 
 // more routes for our API will happen here

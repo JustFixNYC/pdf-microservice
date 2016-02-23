@@ -15,7 +15,9 @@
     "phantomjs": "~2.1.3",
     "express": "~4.0.0",
     "mongoose": "~3.6.13",
-    "body-parser": "~1.0.1"
+    "body-parser": "~1.0.1",
+    "aws-sdk": "latest",
+    "q": "latest"
   },
   "devDependencies": {
     "gulp": "3.9.1",

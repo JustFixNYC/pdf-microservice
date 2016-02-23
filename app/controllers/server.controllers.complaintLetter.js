@@ -4,6 +4,7 @@ var complaint = require('lx-pdf')('./app/pdf_templates/complaint.template.json')
 var pub = {}; // This is our exported module
 var priv = {}; // Internal helper functions
 var rawDate = new Date();
+var aws = require('../services/server.services.aws');
 
 var getDate = {
 
@@ -43,7 +44,7 @@ var getDate = {
 priv.buildPDF = function() {
 	var _this = this;
 
-	
+	// This needs to be replaced by dyanmic content
 	var tenantInfo = {
 		'phone': '(1-808) 547-0092',
 		'name': 'Cyril Figgis',
@@ -144,12 +145,7 @@ priv.buildPDF = function() {
 
 };
 
-
-
 pub.get = function(req, res) {
-
-
-	// This needs to be replaced by dyanmic content
 
 	complaint.print(function(data, error) {
 
@@ -160,13 +156,18 @@ pub.get = function(req, res) {
 		res.json(data); 	
 
 	});
+	complaint.clear();
 
 };
 
 pub.save = function(req, res) {
 	priv.buildPDF();
-	complaint.save('local.pdf', function(error){
-		res.json({'address': 'local.pdf'});
+	complaint.print(function(data, error){
+		if(error == false){
+			res.json(error);
+		}
+
+		aws.saveToS3(data, res); 
 	});
 	complaint.clear();
 }
