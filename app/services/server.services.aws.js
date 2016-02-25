@@ -16,8 +16,9 @@ var s3Deposit = new AWS.S3({params: {Bucket: 'goddamntestbucket'}});
 
 module.exports = {
 	saveToS3 : function(streamContent, res) {
+		var randomNumber = Math.round(Math.random() * 1000);
 		var params = {
-			Key : 'pdf-start-1.pdf',
+			Key : 'pdf-start-' + randomNumber + '.pdf',
 			ContentEncoding: 'UTF-8',
 			Body: streamContent,
 			ContentType: 'application/pdf'
