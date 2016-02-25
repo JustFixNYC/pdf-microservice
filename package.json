@@ -17,7 +17,8 @@
     "mongoose": "~3.6.13",
     "body-parser": "~1.0.1",
     "aws-sdk": "latest",
-    "q": "latest"
+    "q": "latest",
+    "forever": "latest"
   },
   "devDependencies": {
     "gulp": "3.9.1",
