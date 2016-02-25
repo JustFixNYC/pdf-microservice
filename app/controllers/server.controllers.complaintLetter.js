@@ -41,23 +41,18 @@ var getDate = {
 
 }
 
-priv.buildPDF = function() {
+priv.buildPDF = function(data) {
+	console.log(data);
 	var _this = this;
+	var housingInfo = data;
 
 	// This needs to be replaced by dyanmic content
-	var tenantInfo = {
-		'phone': '(1-808) 547-0092',
-		'name': 'Cyril Figgis',
-		'address': '125 Devil Way' + '\n' + 'Queens' + ', New York  ' + '11204'
-	};
+	var tenantInfo = housingInfo.tenantInfo;
 
 	// Redo this
-	this.landlordInfo = {
-		'landlordName': 'Carl Brutananadilewski',
-		'landlordAddress': '600 Main St \n Brooklyn, NY  11235'
-	};
+	var landlordInfo = housingInfo.landlordInfo;
 
-	var rooms = [
+	/*var rooms = [
 		{
 			'room': 'Living Room',
 			'issuesList': [
@@ -107,11 +102,11 @@ priv.buildPDF = function() {
 			'dateFiled': getDate.current()
 		}
 	]
-
-	var firstSentence = 'Dear ' + this.landlordInfo.landlordName + ', \n \n     I need the following repairs in my apartment referenced below and/or in the public areas of the building:\n\n';
+*/
+	var firstSentence = 'Dear ' + landlordInfo.landlordName + ', \n \n     I need the following repairs in my apartment referenced below and/or in the public areas of the building:\n\n';
 
 	var roomLoop = function() {
-		var masterString = '';
+		/*var masterString = '';
 		for(var i = 0; i < rooms.length; i++) {
 			masterString += rooms[i].room + '\n' + rooms[i].dateFiled + '\n';
 
@@ -120,9 +115,9 @@ priv.buildPDF = function() {
 			}
 
 			masterString += 'ADDITIONAL DETAILS: ' + rooms[i].Description + '\n \n ';
-		}
+		}*/
 
-		return masterString;
+		return housingInfo.issuesList;
 	}
 
 	var CYA = '\n\n I have already contacted the person responsible for making repairs on [date of contacting super], but the issue has not been resolved. In the meantime, I have recorded evidence of the violation[s] should legal action be necessary.' +
@@ -140,7 +135,7 @@ priv.buildPDF = function() {
 	complaint.addContent('main', roomLoop());
 	complaint.addContent('main', CYA);
 	complaint.addContent('main', footer);
-	complaint.addContent('landlordAddress', this.landlordInfo.landlordAddress);
+	complaint.addContent('landlordAddress', landlordInfo.landlordAddress);
 	complaint.addContent('date', getDate.current());
 
 };
@@ -161,7 +156,7 @@ pub.get = function(req, res) {
 };
 
 pub.save = function(req, res) {
-	priv.buildPDF();
+	priv.buildPDF(req.body);
 	complaint.print(function(data, error){
 		if(error == false){
 			res.json(error);

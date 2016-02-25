@@ -11,14 +11,15 @@ var bodyParser = require('body-parser');
 var index			 = require('../app/routes/server.routes.index');
 var complaints = require('../app/routes/server.routes.complaintLetter');
 
-// Define raw app routes here
-app.use('/', index);
-app.use('/complaint-letter', complaints);
-
 // configure app to use bodyParser()
 // this will let us get the data from a POST
+app.use(bodyParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+// Define raw app routes here, link them to routers in /routes
+app.use('/', index);
+app.use('/complaint-letter', complaints);
 
 var port = process.env.PORT || 8080;        // set our port
 
