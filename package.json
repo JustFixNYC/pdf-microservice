@@ -8,9 +8,7 @@
     "npm": "3.5.x"
   },
   "scripts": {
-    "start": "forever start ./config/init.js",
-    "test": "grunt test",
-    "postinstall": "bower install --config.interactive=false"
+    "start": "forever start ./config/init.js"
   },
   "dependencies": {
     "lx-pdf": "0.1.x",
