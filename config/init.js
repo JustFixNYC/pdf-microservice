@@ -8,9 +8,11 @@
 var express    = require('express');        // call express
 var app        = express();                 // define our app using express
 var bodyParser = require('body-parser');
+var index			 = require('../app/routes/server.routes.index');
 var complaints = require('../app/routes/server.routes.complaintLetter');
 
-// Define raw app routes here (the above routes contain the actual requests, the controllers the functionality)
+// Define raw app routes here
+app.use('/', index);
 app.use('/complaint-letter', complaints);
 
 // configure app to use bodyParser()
