@@ -8,6 +8,7 @@ var express    = require('express'),        // call express
 
 // middleware to use for all requests
 router.use(function(req, res, next) {
+	// get CORS to work correctly
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   
