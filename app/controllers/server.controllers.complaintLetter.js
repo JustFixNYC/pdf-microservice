@@ -6,7 +6,30 @@ var priv = {}; // Internal helper functions
 var rawDate = new Date();
 var aws = require('../services/server.services.aws');
 
-var getDate = {
+// PHANTOM JS introduction
+var path = require('path');
+var childProcess = require('child_process');
+var phantomjs = require('phantomjs-prebuilt');
+var binPath = phantomjs.path;
+ 
+var childArgs = [
+  path.join(__dirname, '../services/server.services.phantom.js'),
+  'some other argument (passed to phantomjs script)'
+]
+
+childProcess.execFile(binPath, childArgs, function phantomComplaint (err, stdout, stderr) {
+	if(err !== null) {
+		console.log('err: ' + err);
+	} else if(stderr !== '') {
+		console.log('standard error: ' + stderr);
+	}
+
+	console.log(stdout);
+});
+
+
+// Regularly scheduled programming...
+priv.getDate = {
 
 	monthsArray: [
 		'January',
@@ -56,7 +79,7 @@ priv.buildPDF = function(data) {
 	}
 
 	var CYA = ' I have already contacted the person responsible for making repairs on [date of contacting super], but the issue has not been resolved. In the meantime, I have recorded evidence of the violation[s] should legal action be necessary.' +
-		'\n\n If these repairs are not made by ' + getDate.oneMonthLater() + ' I will have no choice but to use my legal remedies to get the repairs done.' +
+		'\n\n If these repairs are not made by ' + priv.getDate.oneMonthLater() + ' I will have no choice but to use my legal remedies to get the repairs done.' +
 		'\n\n Pursuant to NYC Admin Code § 27-2115 an order of civil penalties for all existing violations for which the time to correct has expired is as follows:' +
 		'\n\n C violation:\n$50 per day per violation (if 1-5 units)\n $50-$150 one-time penalty per violation plus $125 per day (5 or more units)' +
 		'\n\n “B” Violation: \n$25-$100 one-time penalty per violation plus $10 per day' +
@@ -71,7 +94,7 @@ priv.buildPDF = function(data) {
 	complaint.addContent('main', CYA);
 	complaint.addContent('main', footer);
 	complaint.addContent('landlordAddress', landlordInfo.landlordAddress);
-	complaint.addContent('date', getDate.current());
+	complaint.addContent('date', priv.getDate.current());
 
 };
 

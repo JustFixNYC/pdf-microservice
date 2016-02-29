@@ -2,7 +2,6 @@
 
 var gulp = require('gulp');
 var webserver = require('gulp-webserver');
-var lxDocument = require('lx-pdf')('./pdf_templates/complaint.template.json');
 var http = require('http');
 var nodemon = require('gulp-nodemon');
 
