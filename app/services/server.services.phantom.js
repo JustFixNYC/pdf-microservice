@@ -1,5 +1,16 @@
 console.log('execute');
+var system = require('system');
+var args = system.args;
 var page = require('webpage').create();
+
+if(args.length === 1) {
+	throw new Error('no args passed! Please make sure the submission was sent correctly');
+} else {
+	page.content = args[1];
+	console.log(args[1]);
+}
+
+// page.settings.media = all;
 
 // Our debugging block
 page.onResourceRequested = function (request) {
@@ -50,17 +61,15 @@ page.onError = function(msg, trace) {
     }
     system.stderr.writeLine(msgStack.join('\n'));
 };
-/*
-page.set('paperSize', {
-  format: 'A4'
-}, function() {
-  console.log('pdf formatted');
-  phantom.exit();
-});
-*/
-page.render('file.pdf', function() {
-	console.log('pdf rendered');
-	phantom.exit();
-});
+
+//Main build block
+// page.paperSize = {
+//   format: 'A4',
+//   orientation: 'portrait',
+//   margin: '1cm'
+// };
+
+
+page.render('file.png', {format: 'png', quality: '100'});
 
 phantom.exit();
