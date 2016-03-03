@@ -17,9 +17,9 @@ app.use(bodyParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(function(req, res, next) {
+app.use(function(err, req, res, next) {
 
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Origin", "*");
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
 
@@ -30,7 +30,7 @@ app.use(function(req, res, next) {
 app.use('/', index);
 app.use('/complaint-letter', complaints);
 
-var port = process.env.PORT || 8080;        // set our port
+var port = process.env.PORT || 5000;        // set our port
 
 // START THE SERVER
 // =============================================================================
