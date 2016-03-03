@@ -27,7 +27,9 @@ module.exports = {
 			if(err) {
 				res.json(error);
 			} else {
+				console.log('pdf saved, headers sent? : ' + res.headersSent);
 				res.json(data.Location);
+				console.log('pdf sent, headers sent? : ' + res.headersSent);
 			}
 		});
 	},

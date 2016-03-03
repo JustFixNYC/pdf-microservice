@@ -1,4 +1,59 @@
-h2 {margin-bottom: 0 !important;}
-h3 {margin-bottom: 0 !important;}
+/* globos/generic */
+
+body {
+	font-size: 12px;
+	font-family: 'Open Sans', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: #303030;
+}
+h2 {
+	margin: 10px 0 0 0;
+	padding: 0px; 
+	font-size: 14px;
+}
+
+h3 {
+	margin: 0 0 3px 0;
+}
+
+h4 {
+	margin: 6px 0 6px 0;
+}
+
+p {
+	margin: 6px 0;
+	text-indent: 24px;
+}
+
+strong {
+	color: #303030;
+}
+
+ul {
+	margin: 0px 0 6px 0;
+}
+
+li {
+	margin: 0px;
+}
 .landlord-address {float:left;}
 .current-date {float:right;}
+
+.issues-list {
+	margin: 18px 0;
+}
+
+.issues-list__single {
+	margin-bottom: 9px;
+}
+
+.issues-list__single:last-child {
+	margin-bottom: 0px;
+}
+
+.salutation {
+	position: absolute;
+	left: 60%;
+}

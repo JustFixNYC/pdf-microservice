@@ -21,7 +21,6 @@ router.get('/', function(req, res) {
 });
 
 router.post('/', function(req, res) {
-  // complaints.save(req, res);
   complaints.save(req, res);
 });
 
