@@ -8,7 +8,7 @@
     "npm": "3.5.x"
   },
   "scripts": {
-    "start": "node ./config/init.js"
+    "start": "forever start ./config/init.js"
   },
   "dependencies": {
     "lx-pdf": "0.1.x",
