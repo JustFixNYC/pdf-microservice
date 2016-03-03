@@ -17,6 +17,15 @@ app.use(bodyParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+app.use(function(req, res, next) {
+
+	// get CORS to work correctly
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
+  next();
+})
+
 // Define raw app routes here, link them to routers in /routes
 app.use('/', index);
 app.use('/complaint-letter', complaints);
