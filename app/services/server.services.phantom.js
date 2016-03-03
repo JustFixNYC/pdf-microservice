@@ -19,9 +19,9 @@ page.paperSize = {
 // Our main callback
 page.onLoadFinished = function () {
 	var title = 'temp/file' + Math.floor(Math.random() * 1000) + 1 + '.pdf';
-	console.log(title);
 	page.render(title);
-	system.stdout = title;
+	// console.log(title);
+	system.stdout.writeLine(title);
 	phantom.exit();
 }
 

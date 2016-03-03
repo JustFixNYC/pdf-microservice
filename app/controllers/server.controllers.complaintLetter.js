@@ -15,6 +15,7 @@ var q = require('q');
 priv.assembleTemplate = function(receivedRequest) {
 
 	receivedRequest.currentDate = priv.getDate.current();
+	receivedRequest.oneMonthLater = priv.getDate.oneMonthLater();
 
 	// Handlebar helper for repeating for loops, essentially. I dunno, it works okay?
 	Handlebars.registerHelper('lister', function(items, options){
@@ -52,7 +53,7 @@ priv.buildPDFPhantomJS = function(data) {
 			console.log('err: ' + err);
 			deferred.reject(err);
 		} else if(stderr !== '') {
-			console.log('standard error: ' + stderr);
+			console.log('std error: ' + stderr);
 			deferred.reject(stderr);
 		} else {
 			deferred.resolve(stdout);
@@ -102,41 +103,30 @@ priv.getDate = {
 
 pub.get = function(req, res) {
 
-	/*complaint.print(function(data, error) {
-
-		if(error == false){
-			res.json(error);
-		}
-
-		res.json(data); 	
-
-	});
-	complaint.clear();*/
+	/*This should probably return the user's already registered url...;*/
 
 };
 
 pub.save = function(req, res) {
-	console.log(res.headersSent);
 
-	priv.buildPDFPhantomJS(req.body)
-		.then(
+	priv.buildPDFPhantomJS(req.body).then(
 		function successCreate(data) {
-			console.log('pdf built, headers sent? : ' + res.headersSent);
 			// UGH I DO NOT LIKE THIS
 			data = data.replace(/\r\n/g, '');
-			fs.readFile(data, function fsRead(err, data) {
+			console.log(data);
+			fs.readFile(data, function fsRead(err, dataStream) {
 				if(err) {
-					console.log(err);
+					console.log('error occured: ' + err);
 				}
-				console.log('pdf prepped, headers sent? : ' + res.headersSent);
-				console.log('success?');
-				aws.saveToS3(data, res);
+				aws.saveToS3(dataStream, res);
+				fs.unlink(data);
 			});
 		},
 
 		function failCreate(err) {
 			res.json(err);
-		});
+		}
+	);
 }
 
 module.exports = pub;
