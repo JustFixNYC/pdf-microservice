@@ -113,7 +113,7 @@ pub.save = function(req, res) {
 		function successCreate(data) {
 			// UGH I DO NOT LIKE THIS
 			console.log('orig: ' + data);
-			dataFile = data.replace(/(\r\n|\n|\r)/gm, '');
+			var dataFile = data.replace(/(\r\n|\n|\r)/gm, '');
 			console.log('new: ' + dataFile);
 			fs.readFile(dataFile, function fsRead(err, dataStream) {
 				if(err) {
