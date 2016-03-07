@@ -10,10 +10,7 @@ router.get('/', function(req, res) {
 });
 
 router.post('/', function(req, res) {
-	console.log('are we hitting the right spot?');  
-
-  // complaints.save(req, res);
-	res.send('correct CORS req');
+  complaints.save(req, res);
 });
 
 // Export to 
