@@ -13,7 +13,7 @@ var express    = require('express'),        // call express
 
 
 router.get('/', function(req, res) {
-	res.send(res.headers);
+	res.send('Wheee, we are alive!');
 });
 // more routes for our API will happen here
 module.exports = router;

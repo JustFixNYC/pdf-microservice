@@ -102,7 +102,7 @@ priv.getDate = {
 }
 
 pub.get = function(req, res) {
-
+	res.send(res.headersSent);
 	/*This should probably return the user's already registered url...;*/
 
 };

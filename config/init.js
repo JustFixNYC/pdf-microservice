@@ -11,26 +11,24 @@ var bodyParser = require('body-parser');
 var index			 = require('../app/routes/server.routes.index');
 var complaints = require('../app/routes/server.routes.complaintLetter');
 
+
+app.use(function CorsEnabled (req, res, next) {
+
+	console.log('request made?');
+
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header("Access-Control-Allow-Headers", "Content-Type, Origin, X-Requested-With, Accept");  
+
+  next();
+
+});
+
 // configure app to use bodyParser()
 // this will let us get the data from a POST
 app.use(bodyParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
-app.use(function(err, req, res, next) {
-	console.log(res);
-
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");  
-  // intercept OPTIONS method
-  if ('OPTIONS' == req.method) {
-    res.send(200);
-  }else {
-  	next();
-  }
-  
-})
 
 // Define raw app routes here, link them to routers in /routes
 app.use('/', index);

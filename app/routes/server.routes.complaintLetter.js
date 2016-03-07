@@ -3,17 +3,18 @@
 var express    = require('express'),        // call express
 		app        = express(),					        // define our app using express
 		router 		 = express.Router(),          // get an instance of the express Router
-		complaints = require('../controllers/server.controllers.complaintLetter'),
-		aws 			 = require('../services/server.services.aws');
+		complaints = require('../controllers/server.controllers.complaintLetter');
 
-// Complaint route (accessed at GET http://localhost:whatever/complaint-letter)
 router.get('/', function(req, res) {
 	complaints.get(req, res);
 });
 
 router.post('/', function(req, res) {
-  complaints.save(req, res);
+	console.log('are we hitting the right spot?');  
+
+  // complaints.save(req, res);
+	res.send('correct CORS req');
 });
 
-// more routes for our API will happen here
+// Export to 
 module.exports = router;
