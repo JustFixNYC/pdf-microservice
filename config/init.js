@@ -13,9 +13,7 @@ var complaints = require('../app/routes/server.routes.complaintLetter');
 
 
 app.use(function CorsEnabled (req, res, next) {
-
-	console.log('request made?');
-
+	
   res.header("Access-Control-Allow-Origin", "*");
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   res.header("Access-Control-Allow-Headers", "Content-Type, Origin, X-Requested-With, Accept");  
