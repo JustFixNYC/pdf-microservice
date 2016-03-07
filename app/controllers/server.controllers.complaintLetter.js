@@ -112,6 +112,7 @@ pub.save = function(req, res) {
 	priv.buildPDFPhantomJS(req.body).then(
 		function successCreate(data) {
 			// UGH I DO NOT LIKE THIS
+			console.log(data);
 			data = data.replace(/\r\n/g, '');
 			console.log(data);
 			fs.readFile(data, function fsRead(err, dataStream) {
