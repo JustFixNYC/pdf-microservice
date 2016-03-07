@@ -15,7 +15,7 @@ AWS.config.update({
 var s3Deposit = new AWS.S3({params: {Bucket: 'goddamntestbucket'}});
 
 module.exports = {
-	saveToS3 : function(streamContent, res) {
+	saveToS3 : function(streamContent, res, callback) {
 		var randomNumber = Math.round(Math.random() * 1000);
 		var params = {
 			Key : 'pdf-start-' + randomNumber + '.pdf',
@@ -28,6 +28,7 @@ module.exports = {
 				res.json(error);
 			} else {
 				res.json(data.Location);
+				callback;
 			}
 		});
 	},

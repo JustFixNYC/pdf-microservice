@@ -118,8 +118,7 @@ pub.save = function(req, res) {
 				if(err) {
 					console.log('error occured: ' + err);
 				}
-				aws.saveToS3(dataStream, res);
-				fs.unlink(data);
+				aws.saveToS3(dataStream, res, fs.unlink(data));
 			});
 		},
 
