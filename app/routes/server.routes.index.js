@@ -11,15 +11,9 @@ var express    = require('express'),        // call express
 // ROUTES FOR OUR API
 // =============================================================================
 
-// middleware to use for all requests
-router.use(function(req, res, next) {
-  // do logging
-  
-  next(); // make sure we go to the next routes and don't stop here
-});
 
 router.get('/', function(req, res) {
-	res.send('Our server is running correctly');
+	res.send(res.headers);
 });
 // more routes for our API will happen here
 module.exports = router;
