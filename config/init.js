@@ -5,15 +5,16 @@
 // =============================================================================
 
 // call the packages we need
-var express    = require('express');        // call express
-var app        = express();                 // define our app using express
-var bodyParser = require('body-parser');
-var index			 = require('../app/routes/server.routes.index');
-var complaints = require('../app/routes/server.routes.complaintLetter');
+var express    = require('express'),
+		app        = express(),
+		bodyParser = require('body-parser'),
+		index			 = require('../app/routes/server.routes.index'),
+		complaints = require('../app/routes/server.routes.complaintLetter');
 
 
+// Establish global CORS settings here (will cascade to the rest of our app)
 app.use(function CorsEnabled (req, res, next) {
-	
+
   res.header("Access-Control-Allow-Origin", "*");
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   res.header("Access-Control-Allow-Headers", "Content-Type, Origin, X-Requested-With, Accept");  
@@ -28,7 +29,7 @@ app.use(bodyParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// Define raw app routes here, link them to routers in /routes
+// Define raw app routes here, links them to routers in /routes (used in require() headers above)
 app.use('/', index);
 app.use('/complaint-letter', complaints);
 

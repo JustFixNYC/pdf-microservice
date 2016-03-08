@@ -5,6 +5,7 @@ var express    = require('express'),        // call express
 		router 		 = express.Router(),          // get an instance of the express Router
 		complaints = require('../controllers/server.controllers.complaintLetter');
 
+// Handle requests to the /complaint-letter route
 router.get('/', function(req, res) {
 	complaints.get(req, res);
 });

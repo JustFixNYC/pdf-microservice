@@ -1,18 +1,8 @@
-// This is gross
-var AWS 			 = require('aws-sdk');
-var authKeys   = {
-	'awsAccessKeyId' : 'AKIAJGIAPUGB3CH62QYA',
-	'awsAccessKeyVal': 'ag2n1WlyWMuJiu+TSJNAAXzQ0LKAFcqleo4Gzr2G'
-};
-var fs 				 = require('fs');
+// Set environment configs w/ AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
+var AWS 			 = require('aws-sdk'),
+		fs 				 = require('fs');
 
-AWS.config.update({
-	AccessKeyId: authKeys.awsAccessKeyId,
-	secretAccessKey: authKeys.awsAccessKeyVal,
-  region: 'us-west-2'
-});
-
-
+// AWS bucket goes here
 var s3Deposit = new AWS.S3({params: {Bucket: 'goddamntestbucket'}});
 
 module.exports = {

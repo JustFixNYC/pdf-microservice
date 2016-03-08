@@ -1,22 +1,22 @@
-var system = require('system');
-var args = system.args;
-var page = require('webpage').create();
+var system = require('system'),
+		args = system.args,
+		page = require('webpage').create();
 
-// Determine if accompanying info was sent correctly
+// Determine if accompanying info was sent from controller correctly
 if(args.length === 1) {
 	throw new Error('no args passed! Please make sure the submission was sent correctly');
 } else {
 	page.content = args[1];
 }
 
-//Main build block
+// Format paper so PDF comes out purrty
 page.paperSize = {
   format: 'A4',
   orientation: 'portrait',
   margin: '1cm'
 };
 
-// Our main callback
+// Once we correctly load our PDF as a webview, then this fires
 page.onLoadFinished = function () {
 	var title = 'temp/file' + Math.floor(Math.random() * 1000) + 1 + '.pdf';
 	page.render(title);

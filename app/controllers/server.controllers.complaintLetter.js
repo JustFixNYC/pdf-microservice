@@ -1,23 +1,29 @@
 'use strict';
 
-var pub = {}; // This is our exported module
-var priv = {}; // Internal helper functions
-var rawDate = new Date();
-var path = require('path');
-var childProcess = require('child_process');
-var phantomjs = require('phantomjs-prebuilt');
-var binPath = phantomjs.path;
-var Handlebars = require('handlebars');
-var aws = require('../services/server.services.aws');
-var fs = require('fs');
-var q = require('q');
+// This is our main controller for the complaint letter
+var pub = {}, // This is our exported module
+		priv = {}, // Internal helper functions
+		rawDate = new Date();
 
+// This is what's required to get childProcess and phantomJS run as a BASH command within node
+var	path = require('path'),
+		childProcess = require('child_process'),
+		phantomjs = require('phantomjs-prebuilt'),
+		binPath = phantomjs.path;
+
+// This is everything else
+var	Handlebars = require('handlebars'), // Templating engine
+		aws = require('../services/server.services.aws'), // Our service for AWS data push
+		fs = require('fs'), // Node file system
+		q = require('q'); // Shoulda used native promises, but w/e
+
+// Build our Template out using Handlebars, passes on populated HTML template as a string
 priv.assembleTemplate = function(receivedRequest) {
 
 	receivedRequest.currentDate = priv.getDate.current();
 	receivedRequest.oneMonthLater = priv.getDate.oneMonthLater();
 
-	// Handlebar helper for repeating for loops, essentially. I dunno, it works okay?
+	// Handlebar for each loop, essentially. Works with incoming arrays 
 	Handlebars.registerHelper('lister', function(items, options){
 
 		var out = '';
@@ -36,18 +42,20 @@ priv.assembleTemplate = function(receivedRequest) {
 
 }
 
+// This is the final data transformations before sending our template out to the PhantomJS bash command
 priv.buildPDFPhantomJS = function(data) {
 
 	var deferred = q.defer();
 
 	var argToPassToPhantomJS = priv.assembleTemplate(data);
 
-	// Begin actual PhantomJS work
+	// Prep files for PhantomJS
 	var childArgs = [
-	  path.join(__dirname, '../services/server.services.phantom.js'),
+	  path.join(__dirname, '../services/server.services.phantom.js'), // THIS IS THE PHANTOMJS SERVICE/SCRIPT
 	  argToPassToPhantomJS
 	];
 
+	// Execute PhantomJS command line script
 	childProcess.execFile(binPath, childArgs, function phantomComplaint (err, stdout, stderr) {
 		if(err !== null) {
 			console.log('err: ' + err);
@@ -61,12 +69,13 @@ priv.buildPDFPhantomJS = function(data) {
 		}
 	});
 
+	// finally, pass on the returned response from the PhantomJS script
 	return deferred.promise;
 
 }
 
 
-// back to our regularly scheduled programming...
+// Modifying date to make human readable
 priv.getDate = {
 
 	monthsArray: [
@@ -103,19 +112,19 @@ priv.getDate = {
 }
 
 pub.get = function(req, res) {
-	res.send(res.headersSent);
+	res.send('Please use correct REST command');
 	/*This should probably return the user's already registered url...;*/
 
 };
 
+// Init save function
 pub.save = function(req, res) {
 
 	priv.buildPDFPhantomJS(req.body).then(
 		function successCreate(localUrl) {
-			console.log('success?')
-			// UGH I DO NOT LIKE THIS
+			
+			// Read file, execute service call to save file depending on if file is executable
 			fs.readFile(localUrl, function fsRead(err, dataStream) {
-				console.log('started AWS thing');
 				if(err) {
 					console.log('error occured: ' + err);
 				}

@@ -1,19 +1,11 @@
-// Figure out when to break out into services (IE AWS)
-// call the packages we need
-var express    = require('express'),        // call express
-		app        = express(),					        // define our app using express
+// Quick visual test for our Heroku server
+var express    = require('express'),        
+		app        = express(),					        
 		router 		 = express.Router();
 
-// REGISTER OUR ROUTES -------------------------------
-// all of our routes will be prefixed with /api
-
-
-// ROUTES FOR OUR API
-// =============================================================================
-
-
 router.get('/', function(req, res) {
-	res.send('Wheee, we are alive!');
+	res.send('Server is up and running!');
 });
-// more routes for our API will happen here
+
+// Export this whole router, our express app will use it in init.js
 module.exports = router;
