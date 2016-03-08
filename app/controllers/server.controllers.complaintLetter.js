@@ -56,6 +56,7 @@ priv.buildPDFPhantomJS = function(data) {
 			console.log('std error: ' + stderr);
 			deferred.reject(stderr);
 		} else {
+			console.log(stdout);
 			deferred.resolve(stdout);
 		}
 	});
@@ -110,17 +111,20 @@ pub.get = function(req, res) {
 pub.save = function(req, res) {
 
 	priv.buildPDFPhantomJS(req.body).then(
-		function successCreate(data) {
+		function successCreate(localUrl) {
+			console.log('success?')
 			// UGH I DO NOT LIKE THIS
-			fs.readFile(dataFile, function fsRead(err, dataStream) {
+			fs.readFile(localUrl, function fsRead(err, dataStream) {
+				console.log('started AWS thing');
 				if(err) {
 					console.log('error occured: ' + err);
 				}
-				aws.saveToS3(dataStream, res, fs.unlink(data));
+				aws.saveToS3(dataStream, res, localUrl);
 			});
 		},
 
 		function failCreate(err) {
+			console.log('ERROR IN CREATION: ' + err);
 			res.json(err);
 		}
 	);
