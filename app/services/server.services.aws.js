@@ -26,6 +26,7 @@ module.exports = {
 		};
 		s3Deposit.upload(params, function(err, data) {
 			if(err) {
+				console.log(err);
 				res.json(error);
 			} else {
 				res.json(data.Location);
