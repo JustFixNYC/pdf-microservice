@@ -31,4 +31,6 @@ These are our raw templates, which should be populated in the controllers with t
 Our CSS files which should be included in the Template head. Just include it as a standard html css link, don't be fancy. Or a hero. Especially not a fancy hero. Should be one for each template, depending on how each PDF is styled. Repeating code in this instance is better than the confusion of multiple CSS files included in each template head -- remember, we're only using this to do a general layout so our PDF engine renders it's pages correctly.
 
 ## Wrap Up
+Only calls available on this end service are on the raw / endpoint. As of right now, a post request here will return a url, which then can be saved to the user. Planned functionality can also include listing sets of urls, should we desire that.
+
 Woo! Obviously there's going to be some overlap, confusion, and might require some cleanup and clarification in terms of what we're expecting and how it's actually going down. Please let me know if you run into any issues or have any questions or comments, I'm available at matt.l.egan@gmail.com. This service was HEAVILY inspired by <a href="http://www.feedhenry.com/server-side-pdf-generation-node-js/">this</a> FeedHenry blog post by <a href="http://www.feedhenry.com/author/david-martin/">David Martin</a>.
