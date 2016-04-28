@@ -27,11 +27,13 @@ priv.assembleTemplate = function(receivedRequest) {
 	Handlebars.registerHelper('lister', function(items, options){
 
 		var out = '';
-		for(var i = 0; i < items.length; i++) {
-			out = out + options.fn(items[i]);
-		}
+		if(items){
+			for(var i = 0; i < items.length; i++) {
+				out = out + options.fn(items[i]);
+			}
 
-		return out;
+			return out;
+		}
 
 	});
 
