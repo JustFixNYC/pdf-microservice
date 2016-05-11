@@ -3,14 +3,14 @@ var AWS 			 = require('aws-sdk'),
 		fs 				 = require('fs');
 
 // AWS bucket goes here
-var s3Deposit = new AWS.S3({params: {Bucket: 'goddamntestbucket'}});
+var s3Deposit = new AWS.S3({params: {Bucket: 'pdfbucket001'}});
 
 module.exports = {
 	saveToS3 : function(streamContent, res, urlToDelete) {
 		var randomNumber = Math.round(Math.random() * 1000);
 		var params = {
 			Key : 'pdf-start-' + randomNumber + '.pdf',
-			ContentEncoding: 'UTF-8',
+			// ContentEncoding: 'UTF-8',
 			Body: streamContent,
 			ContentType: 'application/pdf'
 		};

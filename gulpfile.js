@@ -22,3 +22,11 @@ gulp.task('express', function() {
 	  env: { 'NODE_ENV': 'development' }
   });
 });
+
+gulp.task('default', function() {
+  nodemon({
+	  script: 'config/init.js',
+	  ext: 'js html',
+	  env: { 'NODE_ENV': 'development' }
+  });
+});
