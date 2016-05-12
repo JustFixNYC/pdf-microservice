@@ -20,6 +20,8 @@ var	Handlebars = require('handlebars'), // Templating engine
 // Build our Template out using Handlebars, passes on populated HTML template as a string
 priv.assembleTemplate = function(receivedRequest) {
 
+	console.log(receivedRequest.issues);
+
 	receivedRequest.currentDate = priv.getDate.current();
 	receivedRequest.oneMonthLater = priv.getDate.oneMonthLater();
 

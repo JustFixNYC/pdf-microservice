@@ -11,12 +11,12 @@
 		<span class="current-date">{{currentDate}}</span><div style="clear:both;"></div>
 		<h2>Dear {{landlordInfo.name}},</h2>
 		<p>I need the following repairs in my apartment referenced below and/or in the public areas of the building:</p>
-		<div class="issues-list">{{#lister issuesAssembled}}
+		<div class="issues-list">{{#lister issues}}
 			<div class="issues-list__single">
     		<h3>{{title}}</h3>
    			<h4>ISSUES</h4>	
-   			<ul>{{#lister vals}} 
-   				<li>{{title}}{{#if emergency}} <strong>(EMERGENCY FIX)</strong>{{/if}}</li> 
+   			<ul>{{#lister issues}} 
+   				<li>{{key}}{{#if emergency}} <strong>(EMERGENCY FIX)</strong>{{/if}}</li> 
    			{{/lister}}</ul> 
     		<span class="issues-list__single-start"><strong>Start date:</strong> {{startDate}}</span><br>
    			<span><strong>Description:</strong> {{description}}</span> 
