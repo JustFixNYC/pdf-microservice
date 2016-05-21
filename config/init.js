@@ -31,6 +31,7 @@ app.use(bodyParser.json());
 
 // Define raw app routes here, links them to routers in /routes (used in require() headers above)
 app.use('/', index);
+app.use(express.static('public'));
 app.use('/complaint-letter', complaints);
 
 var port = process.env.PORT || 5000;        // set our port

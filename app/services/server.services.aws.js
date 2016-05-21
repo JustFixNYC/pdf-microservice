@@ -14,7 +14,7 @@ module.exports = {
 			Body: streamContent,
 			ContentType: 'application/pdf'
 		};
-		s3Deposit.upload(params, function(err, data) {
+		/*s3Deposit.upload(params, function(err, data) {
 			if(err) {
 				console.log(err);
 				res.json(error);
@@ -22,7 +22,7 @@ module.exports = {
 				res.json(data.Location);
 				fs.unlink(urlToDelete);
 			}
-		});
+		});*/return;
 	},
 	getFromS3 : function() {
 
