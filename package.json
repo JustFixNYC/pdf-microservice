@@ -11,14 +11,15 @@
     "start": "node ./config/init.js"
   },
   "dependencies": {
-    "phantomjs-prebuilt": "2.1.4",
-    "express": "~4.0.0",
-    "mongoose": "~3.6.13",
-    "body-parser": "~1.0.1",
     "aws-sdk": "latest",
-    "q": "latest",
+    "body-parser": "~1.0.1",
+    "express": "~4.0.0",
     "forever": "latest",
-    "handlebars": "4.0.5"
+    "handlebars": "4.0.5",
+    "handlebars-intl": "^1.1.2",
+    "mongoose": "~3.6.13",
+    "phantomjs-prebuilt": "2.1.4",
+    "q": "latest"
   },
   "devDependencies": {
     "gulp": "3.9.1",
