@@ -13,14 +13,15 @@ var	path = require('path'),
 
 // This is everything else
 var	Handlebars = require('handlebars'), // Templating engine
+		HandlebarsIntl = require('handlebars-intl'),
 		aws = require('../services/server.services.aws'), // Our service for AWS data push
 		fs = require('fs'), // Node file system
 		q = require('q'); // Shoulda used native promises, but w/e
 
+HandlebarsIntl.registerWith(Handlebars);
+
 // Build our Template out using Handlebars, passes on populated HTML template as a string
 priv.assembleTemplate = function(receivedRequest) {
-
-	console.log(priv.getDate.formatDate(receivedRequest.issues[0].startDate))
 
 	receivedRequest.currentDate = priv.getDate.current();
 	receivedRequest.oneMonthLater = priv.getDate.oneMonthLater();
@@ -39,6 +40,20 @@ priv.assembleTemplate = function(receivedRequest) {
 
 	});
 
+	Handlebars.registerHelper('if_neq', function(a, b, opts) {
+    if (a !== b) {
+      return opts.fn(this);
+    } else {
+      return opts.inverse(this);
+    }
+	});
+
+	Handlebars.registerHelper('breaklines', function(text) {
+    text = Handlebars.Utils.escapeExpression(text);
+    text = text.replace(/(\r\n|\n|\r)/gm, '<br>');
+    return new Handlebars.SafeString(text);
+	});
+
 	var complaintTemplate = fs.readFileSync('app/templates/complaint.html', 'UTF8');
 	var template = Handlebars.compile(complaintTemplate);
 
@@ -47,9 +62,10 @@ priv.assembleTemplate = function(receivedRequest) {
 }
 
 // This is the final data transformations before sending our template out to the PhantomJS bash command
-priv.buildPDFPhantomJS = function(data) {
+priv.buildPDFPhantomJS = function(data, url) {
 
 	var deferred = q.defer();
+	data.url = url;
 
 	var argToPassToPhantomJS = priv.assembleTemplate(data);
 
@@ -68,7 +84,6 @@ priv.buildPDFPhantomJS = function(data) {
 			console.log('std error: ' + stderr);
 			deferred.reject(stderr);
 		} else {
-			console.log(stdout);
 			deferred.resolve(stdout);
 		}
 	});
@@ -128,7 +143,7 @@ pub.get = function(req, res) {
 // Init save function
 pub.save = function(req, res) {
 
-	priv.buildPDFPhantomJS(req.body).then(
+	priv.buildPDFPhantomJS(req.body, req.headers.host).then(
 		function successCreate(localUrl) {
 			
 			// Read file, execute service call to save file depending on if file is executable

@@ -47,9 +47,12 @@ li {
 }
 
 .current-date {
+	position: absolute;
+	float: right;
+	top: 0;
+	left: 0;
 	width: 100%;
 	text-align: right;
-	float: right;
 }
 
 .issues-list {
