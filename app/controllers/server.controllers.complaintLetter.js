@@ -23,8 +23,15 @@ HandlebarsIntl.registerWith(Handlebars);
 // Build our Template out using Handlebars, passes on populated HTML template as a string
 priv.assembleTemplate = function(receivedRequest) {
 
+	console.log(receivedRequest);
+
 	receivedRequest.currentDate = priv.getDate.current();
-	receivedRequest.oneMonthLater = priv.getDate.oneMonthLater();
+	
+	if(receivedRequest.emergency === false){
+		receivedRequest.oneMonthLater = priv.getDate.oneMonthLater();
+	} else {
+		receivedRequest.oneMonthLater = 'the soonest possible date';
+	}
 
 	// Handlebar for each loop, essentially. Works with incoming arrays 
 	Handlebars.registerHelper('lister', function(items, options){
@@ -94,7 +101,7 @@ priv.buildPDFPhantomJS = function(data, url) {
 }
 
 
-// Modifying date to make human readable
+// Modifying date to make human readable, possibly replace this w/ Handlebars-Intl?
 priv.getDate = {
 
 	monthsArray: [

@@ -13,7 +13,7 @@ if(args.length === 1) {
 page.paperSize = {
   format: 'A4',
   orientation: 'portrait',
-  margin: '1cm'
+  margin: '1in'
 };
 
 // Once we correctly load our PDF as a webview, then this fires

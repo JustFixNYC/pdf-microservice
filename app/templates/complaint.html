@@ -23,25 +23,23 @@
 		   					<li>{{key}}{{#if emergency}} <strong>(EMERGENCY FIX)</strong>{{/if}}</li> 
 		   				{{/lister}}
 		   			</ul> 
-		    		{{#if startDate}}<span class="issues-list__single-start"><strong>Start date:</strong> {{formatDate startDate day="numeric" month="long" year="numeric"}}</span><br>{{/if}}
+		    		<!-- {{#if startDate}}<span class="issues-list__single-start"><strong>Start date:</strong> {{formatDate startDate day="numeric" month="long" year="numeric"}}</span><br>{{/if}} -->
 		   			{{#if description}}<span><strong>Description:</strong> {{description}}</span>{{/if}} 
 		   		</div>
 	   		{{/if_neq}}
    		{{/lister}}
    	</div>
    	{{#if accessDates}}
-
-   	<h3>ACCESS DATES</h3>
-   	<p>Below are some access dates provided for when repairs can be made. Please contact (using the information provided below) in order to make arrangements. <strong>Anyone coming to perform repairs should arrive no later than 12pm during the provided dates.</strong></p>
-   	<ul>
-			{{#lister accessDates}}
-				<li>{{date}}</li>
-			{{/lister}}
-   	</ul>
-
+	   	<h3>ACCESS DATES</h3>
+	   	<p>Below are some access dates provided for when repairs can be made. Please contact (using the information provided below) in order to make arrangements. <strong>Anyone coming to perform repairs should arrive no later than 12pm during the provided dates.</strong></p>
+	   	<ul>
+				{{#lister accessDates}}
+					<li>{{date}}</li>
+				{{/lister}}
+	   	</ul>
    	{{/if}}
 		
-		<p>I have already contacted the person responsible for making repairs on [date of contacting super], but the issue has not been resolved. In the meantime, I have recorded evidence of the violation[s] should legal action be necessary.</p>
+		<p>I have already contacted the person responsible for making repairs on on several occasions, but the issue has not been resolved. In the meantime, I have recorded evidence of the violation[s] should legal action be necessary.</p>
 		<p>If these repairs are not made by {{oneMonthLater}} I will have no choice but to use my legal remedies to get the repairs done.</p>
 		<p>Pursuant to NYC Admin Code § 27-2115 an order of civil penalties for all existing violations for which the time to correct has expired is as follows:</p>
 		<p class="remove-indent">"C" violation:</p>
