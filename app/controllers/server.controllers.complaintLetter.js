@@ -23,8 +23,6 @@ HandlebarsIntl.registerWith(Handlebars);
 // Build our Template out using Handlebars, passes on populated HTML template as a string
 priv.assembleTemplate = function(receivedRequest) {
 
-	console.log(receivedRequest);
-
 	receivedRequest.currentDate = priv.getDate.current();
 	
 	if(receivedRequest.emergency === false){
