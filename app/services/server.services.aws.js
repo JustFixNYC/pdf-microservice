@@ -15,7 +15,7 @@ module.exports = {
 			ContentType: 'application/pdf'
 		};
 		return;
-		/*s3Deposit.upload(params, function(err, data) {
+		s3Deposit.upload(params, function(err, data) {
 			if(err) {
 				console.log(err);
 				res.json(error);
@@ -23,7 +23,7 @@ module.exports = {
 				res.json(data.Location);
 				fs.unlink(urlToDelete);
 			}
-		});*/
+		});
 	},
 	getFromS3 : function() {
 
