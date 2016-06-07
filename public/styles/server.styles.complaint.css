@@ -15,7 +15,7 @@ h2 {
 }
 
 h3 {
-	margin: 0 0 3px 0;
+	margin: 18px 0 3px 0;
 }
 
 h4 {
@@ -29,6 +29,7 @@ p {
 
 p.remove-indent {
 	text-indent: 0px;
+	margin-bottom: 0px;
 }
 
 strong {
@@ -56,7 +57,7 @@ li {
 }
 
 .issues-list {
-	margin: 18px 0;
+	margin: 0px 0 18px;
 }
 
 .issues-list__single {
@@ -70,4 +71,7 @@ li {
 .salutation {
 	position: absolute;
 	left: 60%;
+}
+.no-margin {
+	margin: 0px;
 }

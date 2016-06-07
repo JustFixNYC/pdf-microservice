@@ -10,7 +10,7 @@
 		<span class="landlord-address">{{breaklines landlordInfo.address}}</span>
 		<span class="current-date">{{currentDate}}</span>
 		<div style="clear:both;"></div>
-		<h2>Dear {{landlordInfo.name}},</h2>
+		<h2>{{landlordInfo.name}},</h2>
 		<p>I need the following repairs in my apartment referenced below and/or in the public areas of the building:</p>
 		<h3>ISSUES</h3>
 		<div class="issues-list">
@@ -23,7 +23,7 @@
 		   					<li>{{key}}{{#if emergency}} <strong>(EMERGENCY FIX)</strong>{{/if}}</li> 
 		   				{{/lister}}
 		   			</ul> 
-		    		<!-- {{#if startDate}}<span class="issues-list__single-start"><strong>Start date:</strong> {{formatDate startDate day="numeric" month="long" year="numeric"}}</span><br>{{/if}} -->
+		    		{{#if startDate}}<span class="issues-list__single-start"><strong>Start date:</strong> {{startDate}}</span><br>{{/if}}
 		   			{{#if description}}<span><strong>Description:</strong> {{description}}</span>{{/if}} 
 		   		</div>
 	   		{{/if_neq}}
@@ -34,23 +34,24 @@
 	   	<p>Below are some access dates provided for when repairs can be made. Please contact (using the information provided below) in order to make arrangements. <strong>Anyone coming to perform repairs should arrive no later than 12pm during the provided dates.</strong></p>
 	   	<ul>
 				{{#lister accessDates}}
-					<li>{{date}}</li>
+					<li>{{this}}</li>
 				{{/lister}}
 	   	</ul>
    	{{/if}}
 		
 		<p>I have already contacted the person responsible for making repairs on on several occasions, but the issue has not been resolved. In the meantime, I have recorded evidence of the violation[s] should legal action be necessary.</p>
-		<p>If these repairs are not made by {{oneMonthLater}} I will have no choice but to use my legal remedies to get the repairs done.</p>
+		<p>If these repairs are not made {{#if emergency}} immediately {{else}} {{oneMonthLater}} {{/if}} I will have no choice but to use my legal remedies to get the repairs done.</p>
 		<p>Pursuant to NYC Admin Code § 27-2115 an order of civil penalties for all existing violations for which the time to correct has expired is as follows:</p>
 		<p class="remove-indent">"C" violation:</p>
-			<p>$50 per day per violation (if 1-5 units)</p>
-			<p>$50-$150 one-time penalty per violation plus $125 per day (5 or more units)</p>
+			<p class="no-margin">$50 per day per violation (if 1-5 units)</p>
+			<p class="no-margin">$50-$150 one-time penalty per violation plus $125 per day (5 or more units)</p>
 		<p class="remove-indent">“B” Violation:</p> 
-			<p>$25-$100 one-time penalty per violation plus $10 per day</p>
+			<p class="no-margin">$25-$100 one-time penalty per violation plus $10 per day</p>
 		<p class="remove-indent">“A” Violation:</p> 
-			<p>$10-$50 one-time penalty per violation</p>
-		<p>Please be advised that NYC Admin Code § 27-2115 provides a civil penalty where a person willfully makes a false certification of correction of a violation per violation falsely certified.</p>
-		<p>Please contact me as soon as possible to arrange a time to have these repairs made at the number provided below.</p>
+			<p class="no-margin">$10-$50 one-time penalty per violation</p>
+			<p class="no-margin">Please be advised that NYC Admin Code § 27-2115 provides a civil penalty where a person willfully makes a false certification</p>
+			<p class="no-margin">of correction of a violation per violation falsely certified.</p>
+			<p class="no-margin">Please contact me as soon as possible to arrange a time to have these repairs made at the number provided below.</p>
 		<br>
 		<div class="salutation">
 			<span>Regards,</span><br/>

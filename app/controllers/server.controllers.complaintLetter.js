@@ -13,23 +13,46 @@ var	path = require('path'),
 
 // This is everything else
 var	Handlebars = require('handlebars'), // Templating engine
-		HandlebarsIntl = require('handlebars-intl'),
 		aws = require('../services/server.services.aws'), // Our service for AWS data push
 		fs = require('fs'), // Node file system
-		q = require('q'); // Shoulda used native promises, but w/e
-
-HandlebarsIntl.registerWith(Handlebars);
+		q = require('q'), // Shoulda used native promises,; but w/e
+		dateFormat = require('dateformat'); // god I hate formatting dates
 
 // Build our Template out using Handlebars, passes on populated HTML template as a string
 priv.assembleTemplate = function(receivedRequest) {
+	var now = new Date();
+	var oneMonthLater = new Date(now.getFullYear(), now.getMonth()+1, 1);
 
-	receivedRequest.currentDate = priv.getDate.current();
-	
-	if(receivedRequest.emergency === false){
-		receivedRequest.oneMonthLater = priv.getDate.oneMonthLater();
-	} else {
-		receivedRequest.oneMonthLater = 'the soonest possible date';
+	// Assuming we get nothin' on the call
+	if(!receivedRequest) {
+		receivedRequest = {};
 	}
+
+	// Handle textifying all our date formats, IMMEDIATELY INVOKED
+	var dateFormatting = function() {
+		receivedRequest.currentDate = dateFormat(now, 'mmmm dS, yyyy');
+		receivedRequest.oneMonthLater = dateFormat(oneMonthLater, 'mmmm dS, yyyy');
+
+		// Check to make sure we can build the issues dateformats
+		if(receivedRequest.issues){
+
+			for (var i = 0; i < receivedRequest.issues.length; i++) {
+				if(receivedRequest.issues[i].startDate) {
+					receivedRequest.issues[i].startDate = dateFormat(receivedRequest.issues[i].startDate, 'mmmm dS, yyyy');
+				}
+			}
+		}
+
+		// Check for access dates
+		if(receivedRequest.accessDates){
+
+			for (var i = 0; i < receivedRequest.accessDates.length; i++) {
+				console.log('are we firing?');
+				receivedRequest.accessDates[i] = dateFormat(receivedRequest.accessDates[i], 'mmmm dS, yyyy');
+			}
+
+		}
+	}();
 
 	// Handlebar for each loop, essentially. Works with incoming arrays 
 	Handlebars.registerHelper('lister', function(items, options){
@@ -45,6 +68,7 @@ priv.assembleTemplate = function(receivedRequest) {
 
 	});
 
+	// Checks that the value returns false
 	Handlebars.registerHelper('if_neq', function(a, b, opts) {
     if (a !== b) {
       return opts.fn(this);
@@ -53,6 +77,7 @@ priv.assembleTemplate = function(receivedRequest) {
     }
 	});
 
+	// Replace any line breaks in other formats (IE \n) with correctly formatted HTML 
 	Handlebars.registerHelper('breaklines', function(text) {
     text = Handlebars.Utils.escapeExpression(text);
     text = text.replace(/(\r\n|\n|\r)/gm, '<br>');
@@ -70,6 +95,8 @@ priv.assembleTemplate = function(receivedRequest) {
 priv.buildPDFPhantomJS = function(data, url) {
 
 	var deferred = q.defer();
+
+	// Assign the endpoint of the PDF here (NOTE: needed to get our styles formatted. )
 	data.url = url;
 
 	var argToPassToPhantomJS = priv.assembleTemplate(data);
@@ -98,47 +125,6 @@ priv.buildPDFPhantomJS = function(data, url) {
 
 }
 
-
-// Modifying date to make human readable, possibly replace this w/ Handlebars-Intl?
-priv.getDate = {
-
-	monthsArray: [
-		'January',
-		'Febuary',
-		'March',
-		'April',
-		'May',
-		'June',
-		'July',
-		'August',
-		'September',
-		'October',
-		'November',
-		'December'
-	],
-
-	current: function () {
-		var finalDate = this.monthsArray[rawDate.getMonth()] + ' ' + rawDate.getDate() + ', ' + rawDate.getFullYear();
-		return finalDate;
-	},
-
-	oneMonthLater: function() {
-		var futureMonth = rawDate.getMonth() + 1;
-		var year = rawDate.getFullYear();
-		if (futureMonth == 12) {
-			futureMonth = 0;
-			year++;
-		}
-		var futureDate = this.monthsArray[futureMonth] + ' ' + rawDate.getDate() + ', ' + year;
-		return futureDate;
-	},
-
-	formatDate: function(raw) {
-		var newDate = new Date(raw);
-	}
-
-}
-
 pub.get = function(req, res) {
 	res.send('Please use correct REST command');
 	/*This should probably return the user's already registered url...;*/
@@ -155,6 +141,7 @@ pub.save = function(req, res) {
 			fs.readFile(localUrl, function fsRead(err, dataStream) {
 				if(err) {
 					console.log('error occured: ' + err);
+					res.send('404: Cannot create file', 404);
 				}
 				aws.saveToS3(dataStream, res, localUrl);
 			});

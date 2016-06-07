@@ -19,8 +19,9 @@ module.exports = {
 				console.log(err);
 				res.json(error);
 			} else {
-				res.json(data.Location);
-				fs.unlink(urlToDelete);
+				/*res.json(data.Location);
+				fs.unlink(urlToDelete);*/
+				res.json(urlToDelete);
 			}
 		});
 	},
