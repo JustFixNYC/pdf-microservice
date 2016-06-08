@@ -13,6 +13,7 @@
   "dependencies": {
     "aws-sdk": "latest",
     "body-parser": "~1.0.1",
+    "dateformat": "^1.0.12",
     "express": "~4.0.0",
     "forever": "latest",
     "handlebars": "4.0.5",
