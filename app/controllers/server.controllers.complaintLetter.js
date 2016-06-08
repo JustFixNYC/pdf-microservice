@@ -14,8 +14,9 @@ var	path = require('path'),
 // This is everything else
 var	Handlebars = require('handlebars'), // Templating engine
 		aws = require('../services/server.services.aws'), // Our service for AWS data push
+		phantomService = require('../services/server.services.phantom'), // Phantom service
 		fs = require('fs'), // Node file system
-		q = require('q'), // Shoulda used native promises,; but w/e
+		q = require('q'), // Shoulda used native promises, but w/e
 		dateFormat = require('dateformat'); // god I hate formatting dates
 
 // Build our Template out using Handlebars, passes on populated HTML template as a string
@@ -47,7 +48,6 @@ priv.assembleTemplate = function(receivedRequest) {
 		if(receivedRequest.accessDates){
 
 			for (var i = 0; i < receivedRequest.accessDates.length; i++) {
-				console.log('are we firing?');
 				receivedRequest.accessDates[i] = dateFormat(receivedRequest.accessDates[i], 'mmmm dS, yyyy');
 			}
 
@@ -91,40 +91,6 @@ priv.assembleTemplate = function(receivedRequest) {
 
 }
 
-// This is the final data transformations before sending our template out to the PhantomJS bash command
-priv.buildPDFPhantomJS = function(data, url) {
-
-	var deferred = q.defer();
-
-	// Assign the endpoint of the PDF here (NOTE: needed to get our styles formatted. )
-	data.url = url;
-
-	var argToPassToPhantomJS = priv.assembleTemplate(data);
-
-	// Prep files for PhantomJS
-	var childArgs = [
-	  path.join(__dirname, '../services/server.services.phantom.js'), // THIS IS THE PHANTOMJS SERVICE/SCRIPT
-	  argToPassToPhantomJS
-	];
-
-	// Execute PhantomJS command line script
-	childProcess.execFile(binPath, childArgs, function phantomComplaint (err, stdout, stderr) {
-		if(err !== null) {
-			console.log('err: ' + err);
-			deferred.reject(err);
-		} else if(stderr !== '') {
-			console.log('std error: ' + stderr);
-			deferred.reject(stderr);
-		} else {
-			deferred.resolve(stdout);
-		}
-	});
-
-	// finally, pass on the returned response from the PhantomJS script
-	return deferred.promise;
-
-}
-
 pub.get = function(req, res) {
 	res.send('Please use correct REST command');
 	/*This should probably return the user's already registered url...;*/
@@ -133,8 +99,12 @@ pub.get = function(req, res) {
 
 // Init save function
 pub.save = function(req, res) {
+	var data = req.body;
+	data.url = req.headers.host;
 
-	priv.buildPDFPhantomJS(req.body, req.headers.host).then(
+	var argToPassToPhantomJS = priv.assembleTemplate(data);
+	
+	phantomService.render(argToPassToPhantomJS).then(
 		function successCreate(localUrl) {
 			
 			// Read file, execute service call to save file depending on if file is executable
