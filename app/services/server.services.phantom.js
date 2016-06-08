@@ -72,20 +72,6 @@ var renderPdf = function(session, args) {
 
       var file = 'temp/file' + Math.floor(Math.random() * 1000) + 1 + '.pdf';
 
-			page.on('onError', function(err){
-				console.log('error');
-				console.log(err);
-				deferred.reject(err);
-			});
-			page.on('onLoadFinished', function(){
-				console.log('finished')
-	      page.render(file).then(function(){
-		      page.close();
-		      page = null;
-		      deferred.resolve(file);
-	      });
-			})
-
 			page.property('content', args);
 
       page.property('paperSize', {
@@ -93,6 +79,19 @@ var renderPdf = function(session, args) {
 			  orientation: 'portrait',
 			  margin: '1in'
 			});
+
+			page.on('onError', function(err){
+				console.log('error');
+				console.log(err);
+				deferred.reject(err);
+			});
+			page.on('onLoadFinished', function(){
+	      page.render(file).then(function(){
+		      page.close();
+		      page = null;
+		      deferred.resolve(file);
+	      });
+			})
     });
 
   } catch(e) {
