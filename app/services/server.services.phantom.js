@@ -7,12 +7,12 @@ var session;
 var createPhantomSession = function(args) {
 	var def = q.defer();
   if (session) {
-    console.log('session exists LOL');
+    // console.log('session exists LOL');
     def.resolve(renderPdf(session, args));
   } else {
-    console.log('new session created');
+    // console.log('new session created');
     phantom.create().then(function(_session){
-    	console.log('session created');
+    	// console.log('session created');
     	session = _session;
     	def.resolve(renderPdf(session, args));
     }, function(error) {
@@ -27,11 +27,11 @@ var createPhantomSession = function(args) {
 var renderPdf = function(session, args) {
   var page;
   var deferred = q.defer();
-  console.log('renderPDF called');
+  // console.log('renderPDF called');
 
   try {
     session.createPage().then(function(_page) {
-    	console.log('page created')
+    	// console.log('page created')
       page = _page;
 
 			page.on('onError', function(err){
@@ -56,9 +56,9 @@ var renderPdf = function(session, args) {
 			});
 
 			page.on('onLoadFinished', function(){
-				console.log('loading finished');
+				// console.log('loading finished');
 	      page.render(file).then(function(){
-	      	console.log('finally done building the PDF');
+	      	// console.log('finally done building the PDF');
 		      page.close();
 		      page = null;
 		      deferred.resolve(file);
