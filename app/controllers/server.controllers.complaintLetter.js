@@ -21,6 +21,7 @@ var	Handlebars = require('handlebars'), // Templating engine
 
 // Build our Template out using Handlebars, passes on populated HTML template as a string
 priv.assembleTemplate = function(receivedRequest) {
+
 	var now = new Date();
 	var oneMonthLater = new Date(now.getFullYear(), now.getMonth()+1, 1);
 
@@ -45,12 +46,14 @@ priv.assembleTemplate = function(receivedRequest) {
 		}
 
 		// Check for access dates
-		if(receivedRequest.accessDates){
+		if(receivedRequest.accessDates[0] !== ''){
 
 			for (var i = 0; i < receivedRequest.accessDates.length; i++) {
 				receivedRequest.accessDates[i] = dateFormat(receivedRequest.accessDates[i], 'mmmm dS, yyyy');
 			}
 
+		} else {
+			receivedRequest.accessDates = [];
 		}
 	}();
 
