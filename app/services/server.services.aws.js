@@ -5,11 +5,21 @@ var AWS 			 = require('aws-sdk'),
 // AWS bucket goes here
 var s3Deposit = new AWS.S3({params: {Bucket: 'pdfbucket001'}});
 
+var randomStringBuilder = function (){
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for( var i=0; i < 8; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}
+
 module.exports = {
 	saveToS3 : function(streamContent, res, urlToDelete) {
-		var randomNumber = Math.round(Math.random() * 1000);
+		var randomString = randomStringBuilder();
 		var params = {
-			Key : 'pdf-start-' + randomNumber + '.pdf',
+			Key : 'pdf-start-' + randomString + '.pdf',
 			// ContentEncoding: 'UTF-8',
 			Body: streamContent,
 			ContentType: 'application/pdf'
